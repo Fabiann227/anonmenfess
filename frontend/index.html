@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kirim Menfess</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="form-container">
+    <form id="menfessForm">
+        <h2>Kirim Menfess Anonim</h2>
+        <textarea id="message" placeholder="Tulis isi menfess..." rows="5"></textarea>
+        <input type="text" id="tags" placeholder="#curhat #anon" />
+        <input type="file" id="media" accept="image/*,video/*" />
+        <button type="submit">Kirim</button>
+    </form>
+  </div>
+</body>
+</html>
