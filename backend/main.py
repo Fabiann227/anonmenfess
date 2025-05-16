@@ -7,6 +7,7 @@ from fastapi import FastAPI, UploadFile, Form
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
+from fastapi.responses import FileResponse
 
 # Telegram bot (aiogram)
 from aiogram import Bot, Dispatcher, F
@@ -69,7 +70,13 @@ app = FastAPI(lifespan=lifespan)
 
 # === Serve frontend ===
 frontend_dir = Path(__file__).parent.parent / "frontend"
-app.mount("/", StaticFiles(directory=frontend_dir, html=True), name="static")
+# Serve static assets (CSS, JS, dll) dari /static
+app.mount("/static", StaticFiles(directory=frontend_dir, html=False), name="static")
+
+# Serve index.html secara eksplisit di root /
+@app.get("/")
+async def serve_index():
+    return FileResponse(frontend_dir / "index.html")
 
 # === Form endpoint ===
 @app.post("/submit")
