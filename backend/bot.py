@@ -12,8 +12,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BOT_TOKEN = os.environ["BOT_TOKEN"]
-CHANNEL_ID = os.environ["CHANNEL_ID"]
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHANNEL_ID = os.getenv("CHANNEL_ID")
+WEBAPP_URL = os.getenv("WEBAPP_URL")
 
 bot = Bot(BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher(storage=MemoryStorage())
@@ -21,7 +22,7 @@ dp = Dispatcher(storage=MemoryStorage())
 @dp.message(F.text == "/start")
 async def start(message: Message):
     kb = ReplyKeyboardMarkup(keyboard=[
-        [KeyboardButton(text="📨 Kirim Menfess", web_app=WebAppInfo(url="https://anonmenfess-api.onrender.com"))]
+        [KeyboardButton(text="📨 Kirim Menfess", web_app=WebAppInfo(url=WEBAPP_URL))]
     ], resize_keyboard=True)
     await message.answer("Selamat datang! Klik tombol di bawah untuk kirim menfess:", reply_markup=kb)
 
@@ -33,7 +34,6 @@ async def handle_webapp_data(message: Message):
         tags = data.get("tags", "")
         media_path = data.get("media_path")
 
-        print(media_path)
         caption = f"<b>📢 Menfess Anonim</b>\n\n{text}\n\n{tags}"
 
         if media_path and os.path.exists(media_path):
@@ -50,8 +50,5 @@ async def handle_webapp_data(message: Message):
         print("WebApp Data Error:", e)
         await message.answer("❌ Gagal mengirim menfess.")
 
-async def main():
+async def setup_bot():
     await dp.start_polling(bot)
-
-if __name__ == "__main__":
-    asyncio.run(main())
