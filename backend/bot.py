@@ -21,7 +21,7 @@ dp = Dispatcher(storage=MemoryStorage())
 @dp.message(F.text == "/start")
 async def start(message: Message):
     kb = ReplyKeyboardMarkup(keyboard=[
-        [KeyboardButton(text="📨 Kirim Menfess", web_app=WebAppInfo(url="https://8ce3-66-96-225-172.ngrok-free.app"))]
+        [KeyboardButton(text="📨 Kirim Menfess", web_app=WebAppInfo(url="https://anonmenfess-api.onrender.com"))]
     ], resize_keyboard=True)
     await message.answer("Selamat datang! Klik tombol di bawah untuk kirim menfess:", reply_markup=kb)
 
